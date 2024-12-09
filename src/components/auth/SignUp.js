@@ -4,6 +4,7 @@ import { auth, googleProvider, db } from '../../firebase/config';
 import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -11,6 +12,7 @@ const SignUp = () => {
   const [username, setUsername] = useState('');
   const [error, setError] = useState(null);
   const [isChecking, setIsChecking] = useState(false);
+  const { setNeedsUsername } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,6 +57,8 @@ const SignUp = () => {
         phoneNumber: '',
         address: ''
       });
+
+      setNeedsUsername(false);
 
       setEmail('');
       setPassword('');
